@@ -5,7 +5,13 @@ import { Observable, tap } from 'rxjs';
 export interface UsuarioRegistro {
     name: string,
     email: string,
-    senha?: string
+    password?: string,
+    role: string
+}
+
+export interface Credentials {
+    name: string,
+    password: string
 }
 
 export interface AuthResponse {
@@ -19,7 +25,7 @@ export interface AuthResponse {
 
 export class AuthService {
 
-    private apiUrl = 'http://localhost:8080/auth';
+    private apiUrl = 'http://localhost:8080/api/v1/users';
 
     private usuarioAtual: UsuarioRegistro | null = null;
 
@@ -35,6 +41,22 @@ export class AuthService {
             })
         )
     };
+
+
+    solicitarCodigoLogin(dadosLogin: Credentials): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth`, dadosLogin);
+    }
+
+    
+    validarCodigo(email: string, codigo: string): Observable<AuthResponse>{
+        const payload = { email, code: codigo};
+
+        return this.http.post<AuthResponse>(`${this.apiUrl}/verify`, payload).pipe(
+            tap((resp) => {
+                this.usuarioAtual = resp.usuario;
+            })
+        )
+    }
 
     getUsuarioAtual(): UsuarioRegistro | null {
         return this.usuarioAtual;

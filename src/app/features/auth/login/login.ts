@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component , signal} from '@angular/core';
 import { Register } from '../register/register';
+import { AuthService } from '../service/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 type TelaAtiva = 'login' | 'verificacao' | 'cadastro';
 
@@ -11,6 +13,13 @@ type TelaAtiva = 'login' | 'verificacao' | 'cadastro';
   styleUrl: './login.css',
 })
 export class LoginComponent {
+
+
+  constructor(private authService: AuthService,
+    private toastr: ToastrService){
+    
+  }
+
 
   mostrarSenha = signal(false);
   alternarVisualizacao() {

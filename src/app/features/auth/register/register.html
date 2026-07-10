@@ -4,7 +4,7 @@
     <span class="text-neutral-500">Cadastre-se para ter acesso aos recursos da assistência</span>
   </div>
 
-  <form [formGroup]="formularioCadastro" class="flex flex-col gap-4 text-neutral-800" (submit)="enviarCadastro()">
+  <form [formGroup]="formularioCadastro" class="flex flex-col gap-4 text-neutral-800" (submit)="onSubmit()">
     
     <div class="flex flex-col gap-1.5">
       <label class="font-semibold tracking-wider text-neutral-600" for="name">Nome Completo</label>
@@ -25,6 +25,37 @@
       <label class="font-semibold tracking-wider text-neutral-600" for="confirmPassword">Confirmar Senha</label>
       <input type="password" id="confirmPassword" formControlName="confirmPassword" class="input-openmac px-5" placeholder="Confirmar a senha">
     </div>
+
+    <div class="flex flex-col gap-1.5 relative w-full">
+        <label class="font-semibold tracking-wider text-neutral-600" for="selectRole">Permissões</label>
+        
+        <button 
+          type="button"
+          (click)="toggleDropdown()"
+          class="input-openmac px-5 flex justify-between items-center w-full text-left bg-white text-neutral-800 focus:outline-none"
+        >
+          <span>{{ obterLabelPermissao(formularioCadastro.get('role')?.value) || 'Selecione uma permissão' }}</span>
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 text-neutral-500 transition-transform" [class.rotate-180]="dropdownAberto">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+          </svg>
+        </button>
+
+        @if (dropdownAberto) {
+          <ul class="absolute z-50 w-full left-0 top-[calc(100%+6px)] bg-neutral-50 border border-neutral-300 rounded-2xl shadow-lg overflow-hidden py-1 animate-fade-in">
+            <li (click)="selecionarOpcao('ADMIN')" class="px-5 py-3 text-neutral-800 hover:bg-neutral-200 cursor-pointer transition-colors font-medium">
+              Admin
+            </li>
+            <li (click)="selecionarOpcao('ATTENDANT')" class="px-5 py-3 text-neutral-800 hover:bg-neutral-200 cursor-pointer transition-colors font-medium">
+              Atendente
+            </li>
+            <li (click)="selecionarOpcao('TECHNICAL')" class="px-5 py-3 text-neutral-800 hover:bg-neutral-200 cursor-pointer transition-colors font-medium">
+              Técnico
+            </li>
+          </ul>
+        }
+     </div>
+
 
     <div class="mt-2">
       <button type="submit" 
