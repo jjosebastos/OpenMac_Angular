@@ -2,6 +2,17 @@ import { Component, output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+
+
+export interface StandardError {
+    timestamp: Date,
+    status: number,
+    error: string,
+    message: string,
+    path: string
+}
 
 @Component({
   selector: 'app-register',
@@ -12,7 +23,6 @@ import { ToastrService } from 'ngx-toastr';
   host: { class: 'w-full flex flex-col items-center justify-center' }
 })
 export class Register {
-
   
   constructor(private fb: FormBuilder, 
     private authService: AuthService,
@@ -77,12 +87,14 @@ export class Register {
           this.toastr.success('Sua conta foi criada com sucesso!');
           this.voltar();
         },
-        error: (erro) => {
-          console.error('Erro ao cadastrar:', erro);
-          const mensagemDoServidor = erro.error.message || 'Houve um erro no cadastro. Tente novamente.';
+        error: (erro : HttpErrorResponse) => {
+
+          const erroPadrao = erro.error as StandardError;
+          const mensagemDoServidor = erroPadrao?.message || 'Houve um erro no cadastro. Tente novamente.'
           
           this.toastr.error(mensagemDoServidor, 'Erro no cadastro');
-        }
+        },
+        
       });
 
     } else {

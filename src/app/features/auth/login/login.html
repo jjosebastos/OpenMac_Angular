@@ -19,7 +19,8 @@
 
     </div>
 
-    <div class="w-full tablet:w-3/5 desktop:w-2/5 min-h-screen bg-white text-black flex flex-col justify-center items-center p-8 md:p-16 transition-all duration-300">
+    <div
+        class="w-full tablet:w-3/5 desktop:w-2/5 min-h-screen bg-white text-black flex flex-col justify-center items-center p-8 md:p-16 transition-all duration-300">
         @if (telaAtual() === 'login') {
 
         <div class="w-full max-w-md flex flex-col gap-8">
@@ -29,25 +30,24 @@
                 <span class="text-3x1 text-neutral-500">Entre com suas credenciais para acessar o sistema</span>
             </div>
 
-            <form class="flex flex-col gap-5">
+            <form class="flex flex-col gap-5" [formGroup]="loginForm" (ngSubmit)="confirmarUsuario()">
 
                 <div class="flex flex-col gap-2">
                     <label class="font-semibold text-neutral-600 tracking-wider" for="email">
                         Email
                     </label>
-                    <input type="email" id="email"
+                    <input type="email" id="email" formControlName="email"
                         class="w-full rounded-3xl border border-neutral-300 bg-neutral-50 px-4 py-3 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all text-sm"
                         placeholder="seu@email.com">
                 </div>
 
                 <div class="flex flex-col gap-2">
-                    <label class="font-semibold  tracking-wider text-neutral-600" for="password">
+                    <label class="font-semibold tracking-wider text-neutral-600" for="password">
                         Senha
                     </label>
 
                     <div class="relative w-full flex items-center">
-
-                        <input [type]="mostrarSenha() ? 'text' : 'password'" id="password"
+                        <input [type]="mostrarSenha() ? 'text' : 'password'" id="password" formControlName="password"
                             class="w-full rounded-3xl border border-neutral-300 bg-neutral-50 pl-5 pr-12 py-3 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all text-sm"
                             placeholder="••••••••">
 
@@ -69,7 +69,6 @@
                             </svg>
                             }
                         </button>
-
                     </div>
                 </div>
 
@@ -94,40 +93,13 @@
                 </p>
             </div>
         </div>
-        }
-        @else if (telaAtual() === 'verificacao'){
-        <div class="flex flex-col gap-2 items-center text-center animate-fade-in">
-            <h3 class="text-2xl font-bold tracking-tight text-neutral-900">Verifique seu e-mail</h3>
-            <span class="text-sm text-neutral-500">Enviamos um código de segurança de 6 dígitos para o seu e-mail
-                corporativo</span>
-        </div>
-
-        <form class="flex flex-col gap-5" (submit)="$event.preventDefault()">
-            <div class="flex flex-col gap-2">
-                <label class="text-xs font-semibold uppercase tracking-wider text-neutral-500 text-center"
-                    for="code">Código de Verificação</label>
-                <input type="text" id="code" class="input-openmac text-center text-lg font-bold tracking-[0.5em] px-4"
-                    placeholder="000000" maxlength="6">
-            </div>
-
-            <button type="submit"
-                class="w-full mt-2 bg-black text-white hover:bg-neutral-900 font-semibold text-sm py-3.5 px-4 rounded-3xl transition-all shadow-sm active:scale-[0.99]">
-                Confirmar Código
-            </button>
-        </form>
-
-        <div class="flex flex-col w-full items-center text-sm">
-            <button (click)="mudarTela('login')"
-                class="text-neutral-900 font-semibold hover:text-neutral-500 underline-offset-4 hover:underline transition-colors">
-                Voltar para o Login
-            </button>
-        </div>
-
 
         } @else if (telaAtual() === 'cadastro') {
-        
+
             <app-register (onVoltarParaLogin)="mudarTela('login')"></app-register>
-        
+
+        } @else if (telaAtual() === 'verify'){
+            <app-verify (onVoltarParaLogin)="mudarTela('login')"></app-verify>
         }
 
 

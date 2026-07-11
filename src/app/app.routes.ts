@@ -6,5 +6,9 @@ export const routes: Routes = [
         path: '',
         loadComponent: () => import('./features/auth/login/login').then(m => m.LoginComponent)
     },
+    {
+        path: 'verify',
+        loadComponent: () => import('./features/auth/verify/verify').then(v => v.VerifyComponent)
+    } 
 
 ];
