@@ -86,10 +86,10 @@
                     </button>
                 </p>
                 <p class="font-semibold">
-                    <a href="#"
+                    <button (click)="mudarTela('password-recovery')"
                         class="text-neutral-900 font-semibold hover:text-neutral-500 underline-offset-3 hover:underline transition-colors duration-100 ml-1">
                         Esqueceu sua senha?
-                    </a>
+                    </button>
                 </p>
             </div>
         </div>
@@ -100,10 +100,9 @@
 
         } @else if (telaAtual() === 'verify'){
             <app-verify (onVoltarParaLogin)="mudarTela('login')"></app-verify>
+        } @else if (telaAtual() ==  'password-recovery') {
+            <app-password-recovery (onVoltarParaLogin)="mudarTela('login')"></app-password-recovery>
         }
-
-
-
     </div>
 
 

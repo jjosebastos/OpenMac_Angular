@@ -8,22 +8,22 @@
   </div>
 
   <div class="flex justify-between gap-2 my-2">
-    <input #box1 (keyup)="manipularFoco($event, null, box2)" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code"
+    <input #box1 (keyup)="manipularFoco($event, null, box2)" (paste)="manipularColar($event, [box1, box2, box3, box4, box5, box6])" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code"
       class="w-12 h-14 text-center text-2xl font-bold border-2 border-neutral-200 rounded-xl focus:border-neutral-900 focus:outline-none bg-neutral-50 focus:bg-white transition-all">
     
-    <input #box2 (keyup)="manipularFoco($event, box1, box3)" type="text" maxlength="1" inputmode="numeric"
+    <input #box2 (keyup)="manipularFoco($event, box1, box3)" (paste)="manipularColar($event, [box1, box2, box3, box4, box5, box6])" type="text" maxlength="1" inputmode="numeric"
       class="w-12 h-14 text-center text-2xl font-bold border-2 border-neutral-200 rounded-xl focus:border-neutral-900 focus:outline-none bg-neutral-50 focus:bg-white transition-all">
     
-    <input #box3 (keyup)="manipularFoco($event, box2, box4)" type="text" maxlength="1" inputmode="numeric"
+    <input #box3 (keyup)="manipularFoco($event, box2, box4)" (paste)="manipularColar($event, [box1, box2, box3, box4, box5, box6])" type="text" maxlength="1" inputmode="numeric"
       class="w-12 h-14 text-center text-2xl font-bold border-2 border-neutral-200 rounded-xl focus:border-neutral-900 focus:outline-none bg-neutral-50 focus:bg-white transition-all">
     
-    <input #box4 (keyup)="manipularFoco($event, box3, box5)" type="text" maxlength="1" inputmode="numeric"
+    <input #box4 (keyup)="manipularFoco($event, box3, box5)" (paste)="manipularColar($event, [box1, box2, box3, box4, box5, box6])" type="text" maxlength="1" inputmode="numeric"
       class="w-12 h-14 text-center text-2xl font-bold border-2 border-neutral-200 rounded-xl focus:border-neutral-900 focus:outline-none bg-neutral-50 focus:bg-white transition-all">
     
-    <input #box5 (keyup)="manipularFoco($event, box4, box6)" type="text" maxlength="1" inputmode="numeric"
+    <input #box5 (keyup)="manipularFoco($event, box4, box6)" (paste)="manipularColar($event, [box1, box2, box3, box4, box5, box6])" type="text" maxlength="1" inputmode="numeric"
       class="w-12 h-14 text-center text-2xl font-bold border-2 border-neutral-200 rounded-xl focus:border-neutral-900 focus:outline-none bg-neutral-50 focus:bg-white transition-all">
     
-    <input #box6 (keyup)="manipularFoco($event, box5, null)" type="text" maxlength="1" inputmode="numeric"
+    <input #box6 (keyup)="manipularFoco($event, box5, null)" (paste)="manipularColar($event, [box1, box2, box3, box4, box5, box6])" type="text" maxlength="1" inputmode="numeric"
       class="w-12 h-14 text-center text-2xl font-bold border-2 border-neutral-200 rounded-xl focus:border-neutral-900 focus:outline-none bg-neutral-50 focus:bg-white transition-all">
   </div>
 

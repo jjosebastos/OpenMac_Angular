@@ -2,7 +2,6 @@ import { Component, output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
 
@@ -83,7 +82,7 @@ export class Register {
       const { name, email, password, role } = this.formularioCadastro.value;
 
       this.authService.registrarUsuario({ name, email, password, role }).subscribe({
-        next: (resp) => {
+        next: () => {
           this.toastr.success('Sua conta foi criada com sucesso!');
           this.voltar();
         },

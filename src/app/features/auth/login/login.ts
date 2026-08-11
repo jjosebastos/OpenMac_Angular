@@ -6,13 +6,14 @@ import { ToastrService } from 'ngx-toastr';
 
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VerifyComponent } from '../verify/verify';
+import { PasswordRecovery } from '../password-recovery/password-recovery';
 
-type TelaAtiva = 'login' | 'verify' | 'cadastro';
+type TelaAtiva = 'login' | 'verify' | 'cadastro' | 'password-recovery';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, Register, ReactiveFormsModule, VerifyComponent],
+  imports: [CommonModule, Register, ReactiveFormsModule, VerifyComponent, PasswordRecovery],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -54,7 +55,7 @@ export class LoginComponent {
 }
 
   confirmarCodigo(email: string, codigo: string) {
-    this.authService.validarCodigo(email, codigo).subscribe({
+    this.authService.validarCodigo(codigo).subscribe({
       next: (resposta) => {
         this.toastr.success('Login efetuado com sucesso!');
       },

@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { AuthService } from '../service/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from 'express';
 
 @Component({
   selector: 'app-verify',
@@ -9,12 +10,33 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './verify.html',
   styleUrl: './verify.css',
 })
-export class VerifyComponent {
+export class VerifyComponent  {
 
   constructor( 
     private authService: AuthService,
     private toastr: ToastrService
   ){}
+
+
+  manipularColar(event: ClipboardEvent, boxes: HTMLInputElement[]): void {
+  event.preventDefault();
+  const pastedData = event.clipboardData?.getData('text');
+  
+  if (!pastedData) return;
+
+  const cleanedData = pastedData.replace(/\D/g, '').substring(0, 6);
+
+  if (cleanedData) {
+    for (let i = 0; i < cleanedData.length; i++) {
+      if (boxes[i]) {
+        boxes[i].value = cleanedData[i];
+      }
+    }
+
+    const nextFocusIndex = cleanedData.length < 6 ? cleanedData.length : 5;
+    boxes[nextFocusIndex].focus();
+  }
+}
 
   manipularFoco(event: KeyboardEvent, anterior: HTMLInputElement | null, proximo: HTMLInputElement | null) {
     const inputAtual = event.target as HTMLInputElement;
@@ -37,7 +59,7 @@ export class VerifyComponent {
     }
     const emailDaSessao = 'email.temporario@openmac.com.br'; 
 
-    this.authService.validarCodigo(emailDaSessao, codigoCompleto).subscribe({
+    this.authService.validarCodigo(codigoCompleto).subscribe({
       next: (resposta) => {
         this.toastr.success('Acesso liberado com sucesso!');
 
@@ -49,6 +71,14 @@ export class VerifyComponent {
   }
 
   dispararReenvio() {
-    this.toastr.info('Solicitando um novo código...', 'Aguarde');
-  }
+    this.authService.reenviarCodigo().subscribe({
+      next: (resposta) => {
+        this.toastr.success('Código enviado. Verifique seu email!');
+      },
+      error: (err) => {
+        this.toastr.error('Erro ao reenviar o código.');
+        console.error(err);
+      }
+    });
+}
 }
